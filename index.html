@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>DOOM — Browser</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Prebuilt doom-wasm from cdn.jsdelivr (no build needed) -->
+  <!-- Source: https://github.com/UstymUkhman/DOOM -->
+  <script src="https://cdn.jsdelivr.net/gh/UstymUkhman/DOOM@latest/dist/doom.js"
+          defer onerror="window._cdnFail=true"></script>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header id="hdr">
+  <div class="logo">
+    <svg width="32" height="32" viewBox="0 0 32 32">
+      <rect width="32" height="32" fill="#1a0000"/>
+      <text x="50%" y="55%" dominant-baseline="middle"
+            text-anchor="middle" font-size="20"
+            font-family="serif" fill="#c00">☠</text>
+    </svg>
+    <span>DOOM</span>
+  </div>
+  <div id="pill" class="pill">STANDBY</div>
+</header>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- canvas wrap -->
+  <div id="wrap">
+    <canvas id="c" width="640" height="400"
+            oncontextmenu="return false"
+            tabindex="0"></canvas>
+
+    <!-- overlay -->
+    <div id="ov">
+      <h1>DOOM</h1>
+      <p class="sub">// pure browser · no install · no build</p>
+
+      <!-- WAD drop zone -->
+      <div id="dropzone" class="dropzone">
+        <span id="drop-lbl">
+          Drop <code>.wad</code> here<br/>
+          <small>or</small>
+        </span>
+        <label class="file-btn">
+          Browse WAD
+          <input type="file" id="wad-pick" accept=".wad,.WAD"/>
+        </label>
+        <small class="hint">
+          Shareware <code>doom1.wad</code> is free &amp; legal →
+          <a href="https://distro.ibiblio.org/slitaz/sources/packages/d/doom1.wad"
+             target="_blank">download here</a>
+        </small>
+      </div>
+
+      <div id="bar-wrap"><div id="bar"></div></div>
+      <span id="bar-lbl"></span>
+
+      <button id="launch" disabled>▶ LAUNCH</button>
+
+      <p class="hint2">click canvas to lock pointer · ESC to release</p>
+    </div>
+  </div>
+
+  <!-- key map -->
+  <div id="keymap">
+    <div class="km"><span>↑ ↓</span>Move</div>
+    <div class="km"><span>← →</span>Turn</div>
+    <div class="km"><span>CTRL</span>Fire</div>
+    <div class="km"><span>SPC</span>Use</div>
+    <div class="km"><span>SHIFT</span>Run</div>
+    <div class="km"><span>ALT</span>Strafe</div>
+    <div class="km"><span>1-7</span>Weapons</div>
+    <div class="km"><span>TAB</span>Map</div>
+    <div class="km"><span>F1</span>Help</div>
+    <div class="km"><span>ESC</span>Menu</div>
+    <div class="km"><span>P</span>Pause</div>
+    <div class="km"><span>F5</span>Detail</div>
+  </div>
+
+  <!-- controls bar -->
+  <div id="ctrlbar">
+    <button class="cb" id="btn-fs"    disabled>⛶ Fullscreen</button>
+    <button class="cb" id="btn-pause" disabled>⏸ Pause</button>
+    <button class="cb" id="btn-mute"  disabled>🔇 Mute</button>
+    <button class="cb" id="btn-ss"    disabled>📷 Screenshot</button>
+    <button class="cb" id="btn-con">≡ Console</button>
+  </div>
+
+  <!-- console -->
+  <div id="con-wrap">
+    <div id="con-hdr">
+      <span>// console</span>
+      <div style="display:flex;gap:8px">
+        <button onclick="UI.clrCon()">clear</button>
+        <button onclick="UI.toggleCon()">hide</button>
+      </div>
+    </div>
+    <div id="con"></div>
+  </div>
+
+  <!-- info strip -->
+  <div id="infostrip">
+    <div class="ic"><div class="il">WebAssembly</div>
+      <div class="iv" id="inf-wasm">—</div></div>
+    <div class="ic"><div class="il">SharedArrayBuffer</div>
+      <div class="iv" id="inf-sab">—</div></div>
+    <div class="ic"><div class="il">WAD</div>
+      <div class="iv" id="inf-wad">none</div></div>
+    <div class="ic"><div class="il">State</div>
+      <div class="iv" id="inf-state">idle</div></div>
+    <div class="ic"><div class="il">Engine</div>
+      <div class="iv">doom-wasm / JS</div></div>
+    <div class="ic"><div class="il">Renderer</div>
+      <div class="iv">Canvas2D / WebGL</div></div>
+  </div>
+
+</main>
+
+<footer>
+  DOOM © 1993 id Software ·
+  <a href="https://github.com/UstymUkhman/DOOM" target="_blank">doom-wasm</a> ·
+  <a href="https://github.com/cloudwu/pdoom" target="_blank">pdoom</a> ·
+  GPLv2
+</footer>
+
+<!-- scripts — order matters -->
+<script src="ui.js"></script>
+<script src="wad.js"></script>
+<script src="input.js"></script>
+<script src="audio.js"></script>
+<script src="loader.js"></script>
+
+</body>
+</html>
